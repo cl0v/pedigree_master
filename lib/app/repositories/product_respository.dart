@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:master/app/repositories/store_repository.dart';
 
-
 class Categoria {
   String category;
   String breed;
@@ -26,13 +25,19 @@ class Categoria {
 }
 
 class Product {
+  static final String pTitle = 'title';
+  static final String pImgUrl = 'imgUrl';
+  static final String pCategory = 'category';
+  static final String pApproved = 'approved';
+  static final String pStoreId = 'storeId';
+
   //TODO: Add referencia
-  String storeId;
+  String id;
   String title;
   String imgUrl;
-  bool approved;
   Categoria category;
-  String id;
+  bool approved;
+  String storeId;
   Product({
     required this.title,
     required this.category,
@@ -44,21 +49,21 @@ class Product {
 
   toMap() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['approved'] = this.approved;
-    data['storeId'] = this.storeId;
-    data['title'] = this.title;
-    data['imgUrl'] = this.imgUrl;
-    data['category'] = this.category.toMap();
+    data[pTitle] = this.title;
+    data[pImgUrl] = this.imgUrl;
+    data[pCategory] = this.category.toMap();
+    data[pApproved] = this.approved;
+    data[pStoreId] = this.storeId;
     return data;
   }
 
   Product.fromSnap(DocumentSnapshot<Map<String, dynamic>> snap)
       : this(
-          approved: snap.data()!['approved'],
-          storeId: snap.data()!['storeId'],
-          title: snap.data()!['title'],
-          imgUrl: snap.data()!['imgUrl'],
-          category: Categoria.fromJson(snap.data()!['category']),
+          title: snap.data()![pTitle],
+          imgUrl: snap.data()![pImgUrl],
+          category: Categoria.fromJson(snap.data()![pCategory]),
+          approved: snap.data()![pApproved],
+          storeId: snap.data()![pStoreId],
           id: snap.reference.id,
         );
 }
@@ -66,7 +71,8 @@ class Product {
 class ProductFirebase {
   static final String collectionPath = 'products';
 
-  final ref = FirebaseFirestore.instance
+//TODO: Make ref private
+  final _ref = FirebaseFirestore.instance
       .collection(collectionPath)
       .withConverter<Product>(
         fromFirestore: (snapshot, _) => Product.fromSnap(snapshot),
@@ -74,17 +80,21 @@ class ProductFirebase {
       );
 
   create(Img img, Product p) async {
-    ref.add(p).then((r) => ImgUploader(p: p).uploadFoto(r, img));
+    _ref.add(p).then((r) => ImgUploader(p: p).uploadFoto(r, img));
   }
 
-  Stream<List<Product>> read(String storeId) => ref
-      .where('storeId', isEqualTo: storeId)
-      .snapshots()
-      .map((p) => p.docs.map((e) => e.data()).toList());
+//TODO: Rename to readAll
+  Stream<List<Product>> readAll(String storeId) {
+    print(storeId);
+    return _ref
+        .where(Product.pStoreId, isEqualTo: storeId)
+        .snapshots()
+        .map((p) => p.docs.map((e) => e.data()).toList());
+  }
 
-  update(Product p) => ref.doc(p.id).update(p.toMap());
+  update(Product p) => _ref.doc(p.id).update(p.toMap());
 
-  delete(String id) => ref.doc(id).delete();
+  delete(String id) => _ref.doc(id).delete();
 }
 
 class Img {
@@ -119,7 +129,6 @@ class ImgUploader {
     //https://pub.dev/packages/file_picker
     SettableMetadata metadata = SettableMetadata(contentType: 'image/jpeg');
     await ref.putData(foto.fileUnit!, metadata).whenComplete(() async {
-      print(await ref.getDownloadURL());
       await docRef.update({'imgUrl': await ref.getDownloadURL()});
     });
   }

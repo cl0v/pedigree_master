@@ -17,14 +17,14 @@ void main() async {
   await Firebase.initializeApp();
 
   bool useEmulator = true;
-  bool settings = false;
+  bool firstRun = true;
 
   if (kDebugMode && useEmulator) {
     String host = defaultTargetPlatform == TargetPlatform.android
         ? '10.0.2.2:8080'
         : 'localhost:8080';
 
-    if (!settings) {
+    if (firstRun) {
       FirebaseFirestore.instance.settings = Settings(
         host: host,
         sslEnabled: false,
@@ -75,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
 class StoreBloc {
   final _r = StoreFirebase();
 
-  get stream => _r.read();
+  get stream => _r.readAll();
 
   create(Store s) => _r.create(s);
 
@@ -88,7 +88,7 @@ class ProductBloc {
 
   ProductBloc(this.storeId);
 
-  get stream => _rep.read(storeId);
+  get stream => _rep.readAll(storeId);
 
   create(Img img, Product p) => _rep.create(img, p);
 }
