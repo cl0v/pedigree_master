@@ -5,8 +5,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:master/app/repositories/product_respository.dart';
 import 'package:master/app/repositories/store_repository.dart';
+import 'app/widgets/category_screen.dart';
 import 'app/widgets/img_picker.dart';
-
 
 //TODO:adicionar localizacao
 
@@ -16,7 +16,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
-  bool useEmulator = true;
+  bool useEmulator = false;
   bool firstRun = true;
 
   if (kDebugMode && useEmulator) {
@@ -251,7 +251,7 @@ class StoreScreen extends StatefulWidget {
 
 class _StoreScreenState extends State<StoreScreen> {
   get _bloc => ProductBloc(widget.store.id!);
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -292,7 +292,7 @@ class _StoreScreenState extends State<StoreScreen> {
         onPressed: () {
           push(
               context,
-              CreateProductScreen(
+              PetCategorySectionWidget(
                 storeId: widget.store.id!,
               ));
         },
@@ -304,11 +304,13 @@ class _StoreScreenState extends State<StoreScreen> {
 
 class CreateProductScreen extends StatefulWidget {
   final String storeId;
-  final Product? product;
+  final Product? product; //TODO: Por enquanto nao edita
+  final Categoria? category;
   const CreateProductScreen({
     Key? key,
     required this.storeId,
     this.product,
+    this.category,
   }) : super(key: key);
 
   @override
@@ -353,7 +355,7 @@ class _CreateProductScreenState extends State<CreateProductScreen> {
             imgUrl: '',
             storeId: widget.storeId,
             title: _tTitle.text,
-            category: Categoria(category: 'c', breed: 'b'),
+            category: widget.category!,
           );
           _bloc.create(img!, p);
           pop(context);
