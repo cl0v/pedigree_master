@@ -1,14 +1,11 @@
 import 'dart:convert';
 
+import 'package:commons/commons.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:master/app/repositories/product_respository.dart';
-import 'package:master/keys.dart';
 
 import '../../main.dart';
 
-/// Vai botar em gradiente 2*n as categorias existentes na lista mockedCategoryList
-///
 
 class CategoriaModelHelper {
   late String categoria;
@@ -43,12 +40,11 @@ class EspecieModelHelper {
 }
 
 class _CategoryBloc {
-  final url = configJsonUrl;
+  final url = Configs.configJsonUrl;
   Future<List<CategoriaModelHelper>> get future async {
     var response = await Dio().get(url);
     List<CategoriaModelHelper> list = response.data.map<CategoriaModelHelper>(
       (v) {
-        print(v);
         return CategoriaModelHelper.fromMap(v);
       },
     ).toList()
@@ -159,7 +155,7 @@ class CategoriasScreen extends StatelessWidget {
                         context,
                         CreateProductScreen(
                             storeId: storeId,
-                            category: Categoria(
+                            category: CategoriaFilhote(
                               category: categoria.categoria,
                               breed: e.nome,
                             )),

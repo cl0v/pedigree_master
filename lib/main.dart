@@ -1,12 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:commons/commons.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:master/app/repositories/product_respository.dart';
-import 'package:master/app/repositories/store_repository.dart';
 import 'app/widgets/category_screen.dart';
-import 'app/widgets/img_picker.dart';
 
 //TODO:adicionar localizacao
 
@@ -43,7 +42,7 @@ class Pedigree extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Pedigree seller',
+      title: 'Pedigree Vendedor',
       debugShowCheckedModeBanner: false,
       initialRoute: Routes.Home,
       routes: routes,
@@ -88,9 +87,9 @@ class ProductBloc {
 
   ProductBloc(this.storeId);
 
-  get stream => _rep.readAll(storeId);
+  get stream => _rep.readFromStore(storeId);
 
-  create(Img img, Product p) => _rep.create(img, p);
+  create(PlatformFile img, Product p) => _rep.create(img, p);
 }
 
 class StoreListScreen extends StatefulWidget {
@@ -305,7 +304,7 @@ class _StoreScreenState extends State<StoreScreen> {
 class CreateProductScreen extends StatefulWidget {
   final String storeId;
   final Product? product; //TODO: Por enquanto nao edita
-  final Categoria? category;
+  final CategoriaFilhote? category;
   const CreateProductScreen({
     Key? key,
     required this.storeId,
@@ -328,7 +327,7 @@ class _CreateProductScreenState extends State<CreateProductScreen> {
     _tTitle = TextEditingController(text: widget.product?.title);
   }
 
-  Img? img;
+  PlatformFile? img;
 
   @override
   Widget build(BuildContext context) {
@@ -339,7 +338,8 @@ class _CreateProductScreenState extends State<CreateProductScreen> {
       body: Column(
         children: [
           ImagePickerTileWidget(
-            onChanged: (Img i) {
+            onChanged: (i) {
+              print('trocando de img agr : $i');
               img = i;
             },
             title: 'Foto',
@@ -367,10 +367,3 @@ class _CreateProductScreenState extends State<CreateProductScreen> {
     );
   }
 }
-
-push(BuildContext context, Widget p) => Navigator.push(
-      context,
-      MaterialPageRoute(builder: (_) => p),
-    );
-
-pop(BuildContext c) => Navigator.pop(c);

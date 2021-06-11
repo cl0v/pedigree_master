@@ -1,0 +1,118 @@
+{
+  "project_info": {
+    "project_number": "3740610621",
+    "project_id": "pedigree-app-5cfbe",
+    "storage_bucket": "pedigree-app-5cfbe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:3740610621:android:cb3d50526ebe1d8c633a54",
+        "android_client_info": {
+          "package_name": "com.example.master"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "3740610621-rbe8keb7p8bgik2bkue35ouvkpucvonq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDM_uaWgNUlPdxBkqO217BEao-ItrGBPDc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "3740610621-rbe8keb7p8bgik2bkue35ouvkpucvonq.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "3740610621-7k3oa2vf7dt0o6ji44n242aan2o16vi4.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.pedigree"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:3740610621:android:8e333b70677d56fd633a54",
+        "android_client_info": {
+          "package_name": "com.example.pedigree"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "3740610621-rbe8keb7p8bgik2bkue35ouvkpucvonq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDM_uaWgNUlPdxBkqO217BEao-ItrGBPDc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "3740610621-rbe8keb7p8bgik2bkue35ouvkpucvonq.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "3740610621-7k3oa2vf7dt0o6ji44n242aan2o16vi4.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.pedigree"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:3740610621:android:5585da105546b058633a54",
+        "android_client_info": {
+          "package_name": "com.example.pedigree_seller"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "3740610621-rbe8keb7p8bgik2bkue35ouvkpucvonq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDM_uaWgNUlPdxBkqO217BEao-ItrGBPDc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "3740610621-rbe8keb7p8bgik2bkue35ouvkpucvonq.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "3740610621-7k3oa2vf7dt0o6ji44n242aan2o16vi4.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.pedigree"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
